@@ -1,11 +1,5 @@
 package com.hotelbooking.hotelbookingapp.controller;
 
-import com.hotelbooking.hotelbookingapp.exception.UsernameAlreadyExistsException;
-import com.hotelbooking.hotelbookingapp.model.enums.RoleType;
-import com.hotelbooking.hotelbookingapp.model.dto.UserRegistrationDTO;
-import com.hotelbooking.hotelbookingapp.security.RedirectUtil;
-import com.hotelbooking.hotelbookingapp.service.UserService;
-import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -14,6 +8,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import com.hotelbooking.hotelbookingapp.exception.UsernameAlreadyExistsException;
+import com.hotelbooking.hotelbookingapp.model.dto.UserRegistrationDTO;
+import com.hotelbooking.hotelbookingapp.model.enums.RoleType;
+import com.hotelbooking.hotelbookingapp.security.RedirectUtil;
+import com.hotelbooking.hotelbookingapp.service.UserService;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class AuthController {

@@ -3,6 +3,8 @@
       layout:decorate="~{/layout/layout-main}">
 <head>
     <title>Complete Payment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 </head>
 <body>
 <th:block layout:fragment="content">
@@ -29,61 +31,59 @@
                 </div>
                 <!-- Check-in, Check-out & Duration -->
                 <div class="card mb-2">
-                    <div class="row card-body">
-                        <div class="col">
-                            <p><strong>Check-in</strong></p>
-                            <p th:text="${bookingInitiationDTO.checkinDate}"></p>
-                        </div>
-                        <div class="col">
-                            <p><strong>Check-out</strong></p>
-                            <p th:text="${bookingInitiationDTO.checkoutDate}"></p>
-                        </div>
+                <div class="row card-body">
+                    <div class="col">
+                        <p><strong>Check-in</strong></p>
+                        <p th:text="${bookingInitiationDTO.checkinDate}"></p>
                     </div>
-                    <div class="card-body">
-                        <p><strong>Duration of stay:</strong></p>
-                        <p><span th:text="${bookingInitiationDTO.durationDays}">0></span> nights</p>
+                    <div class="col">
+                        <p><strong>Check-out</strong></p>
+                        <p th:text="${bookingInitiationDTO.checkoutDate}"></p>
                     </div>
-                    <div class="card-body">
-                        <p><strong>Selected rooms:</strong></p>
-                        <div th:each="roomSelection : ${bookingInitiationDTO.roomSelections}"
-                             th:if="${roomSelection.count > 0}">
-                            <p th:text="${roomSelection.count + ' x ' + roomSelection.roomType}">0 x Room</p>
-                        </div>
+                </div>
+                <div class="card-body">
+                    <p><strong>Durasi Menginap:</strong></p>
+                    <p><span th:text="${bookingInitiationDTO.durationDays}">0</span> malam</p>
+                </div>
+                <div class="card-body">
+                    <p><strong>Kamar yang Dipilih:</strong></p>
+                    <div th:each="roomSelection : ${bookingInitiationDTO.roomSelections}"
+                        th:if="${roomSelection.count > 0}">
+                        <p th:text="${roomSelection.count + ' x ' + roomSelection.roomType}">0 x Room</p>
                     </div>
                 </div>
             </div>
-            <!-- Price and Payment Form -->
+            </div>
+
+            <!-- Rincian Harga dan Form Pembayaran -->
             <div class="col-md-8">
-                <!-- Price Details -->
+                <!-- Rincian Harga -->
                 <div class="card mb-2">
                     <div class="card-body">
-                        <h4><strong>Total Price:</strong></h4>
-                        <h4 th:utext="'$ ' + ${#numbers.formatDecimal(bookingInitiationDTO.totalPrice, 0, 'COMMA', 2, 'POINT')}">$0.00</h4>
+                        <h4><strong>Total Harga:</strong></h4>
+                        <h4 th:utext="'Rp ' + ${#numbers.formatDecimal(bookingInitiationDTO.totalPrice, 0, 'COMMA', 0, 'POINT')}">Rp0</h4>
                     </div>
                 </div>
-                <!-- Payment Form -->
+
+                <!-- Form Pembayaran -->
                 <div class="card mb-2">
                     <div class="card-body">
                         <form action="/booking/payment" method="post" th:object="${paymentCardDTO}">
                             <div class="form-group mb-3">
-                                <label class="form-label" for="cardholderName">Cardholder Name</label>
-                                <input class="form-control" id="cardholderName" type="text" th:field="*{cardholderName}"
-                                       required>
-                                <p class="text-danger" th:if="${#fields.hasErrors('cardholderName')}"
-                                   th:errors="*{cardholderName}"></p>
+                                <label class="form-label" for="cardholderName">Nama Pemilik Kartu</label>
+                                <input class="form-control" id="cardholderName" type="text" th:field="*{cardholderName}" required>
+                                <p class="text-danger" th:if="${#fields.hasErrors('cardholderName')}" th:errors="*{cardholderName}"></p>
                             </div>
                             <div class="form-group mb-3">
-                                <label class="form-label" for="cardNumber">Card Number</label>
+                                <label class="form-label" for="cardNumber">Nomor Kartu</label>
                                 <input class="form-control" id="cardNumber" type="text" th:field="*{cardNumber}" required>
                                 <p class="text-danger" th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}"></p>
                             </div>
                             <div class="form-group row mb-3">
                                 <div class="col-6">
-                                    <label class="form-label" for="expirationDate">Expiration Date</label>
-                                    <input class="form-control" id="expirationDate" type="text" th:field="*{expirationDate}"
-                                           placeholder="MM/YY" required>
-                                    <p class="text-danger" th:if="${#fields.hasErrors('expirationDate')}"
-                                       th:errors="*{expirationDate}"></p>
+                                    <label class="form-label" for="expirationDate">Tanggal Kedaluwarsa</label>
+                                    <input class="form-control" id="expirationDate" type="text" th:field="*{expirationDate}" placeholder="MM/YY" required>
+                                    <p class="text-danger" th:if="${#fields.hasErrors('expirationDate')}" th:errors="*{expirationDate}"></p>
                                 </div>
                                 <div class="col-6">
                                     <label class="form-label" for="cvc">CVC</label>

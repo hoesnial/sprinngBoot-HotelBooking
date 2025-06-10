@@ -1,34 +1,408 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layout/layout-main}">
-<head>
-    <title>Homepage</title>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HotelHeaven - Sistem Pemesanan Hotel</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
-        body {
-            background-image: url('/img/maldives-bg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-        .content {
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-        }
+      :root {
+        --primary-color: #3a5a78;
+        --secondary-color: #f8f9fa;
+        --accent-color: #ff7e5f;
+      }
+
+      .hero-section {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+          url("https://source.unsplash.com/random/1200x800/?luxury-hotel")
+            no-repeat center center;
+        background-size: cover;
+        height: 50vh;
+        position: relative;
+      }
+
+      .overlay {
+        display: flex;
+        align-items: center;
+      }
+
+      .room-card {
+        transition: all 0.3s;
+        border: none;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+
+      .room-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .amenities i {
+        color: var(--accent-color);
+        margin-right: 5px;
+      }
+
+      .search-box {
+        background: white;
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-top: -40px;
+        position: relative;
+        z-index: 10;
+      }
+
+
+      .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+      }
+
+      .btn-primary:hover {
+        background-color: #2c4761;
+        border-color: #2c4761;
+      }
+
+      .btn-accent {
+        background-color: var(--accent-color);
+        border-color: var(--accent-color);
+        color: white;
+      }
+
+      .btn-accent:hover {
+        background-color: #e66b4d;
+        border-color: #e66b4d;
+        color: white;
+      }
+
+      .feature-icon {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+      }
+
+      .testimonial-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .testimonial-img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 0 auto 15px;
+      }
+
+      .rating {
+        color: #ffc107;
+        margin-bottom: 10px;
+      }
+
+      footer {
+        background-color: #2c3e50;
+      }
+      
     </style>
-</head>
-<body>
-<th:block layout:fragment="content">
-    <div class="content container pt-5">
-        <div class="row justify-content-center align-items-start">
-            <div class="col-12 text-center">
-                <h1 class="display-5 mb-5"><strong>"Every journey is a step closer to finding who you truly are."</strong></h1>
-                <p class="lead fs-3 mb-5">We believe in making your travel plans simple and enjoyable.<br>Let's start a new
-                    journey!</p>
-                <a href="/login" class="btn btn-primary btn-lg">Explore - Dream - Discover</a>
-            </div>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/">
+          <i class="fas fa-hotel me-2"></i>
+          <span>Hotel Heaven</span>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="/">Beranda</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#facilities">Fasilitas</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/login">
+                <i class="fas fa-sign-in-alt me-1"></i> Login
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="registerDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
+                <i class="fas fa-user-plus me-1"></i> Daftar
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <a class="dropdown-item" href="/register/customer">
+                    <i class="fas fa-user me-2"></i>Pelanggan
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/register/manager">
+                    <i class="fas fa-user-tie me-2"></i>Manager
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="overlay">
+        <div class="container text-white">
+          <div class="row">
+            <div class="col-lg-6">
+              <h1 class="display-4 fw-bold mb-4">
+                Pengalaman Menginap Terbaik di HotelHeaven
+              </h1>
+              <p class="lead mb-4">
+                Nikmati kenyamanan kelas dunia dengan pelayanan terbaik dan
+                fasilitas lengkap untuk liburan atau perjalanan bisnis Anda.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search Box -->
+    <div class="container">
+      <div class="search-box">
+        <form>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label for="city" class="form-label">Kota</label>
+              <input type="text" class="form-control" id="city" placeholder="Masukkan nama kota" />
+            </div>
+            <div class="col-md-3">
+              <label for="checkin" class="form-label">Tanggal Check-in</label>
+              <input type="date" class="form-control" id="checkin" />
+            </div>
+            <div class="col-md-3">
+              <label for="checkout" class="form-label">Tanggal Check-out</label>
+              <input type="date" class="form-control" id="checkout" />
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+              <a class="btn btn-primary w-100" href="/login">
+                <i class="fas fa-search me-2"></i>Cari
+              </a>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-</th:block>
-</body>
+
+    <!-- Features Section -->
+    <section class="py-5">
+      <div class="container">
+        <div class="row text-center mb-5">
+          <div class="col">
+            <h2>Mengapa Memilih HotelHeaven?</h2>
+            <p class="lead">
+              Kami memberikan pengalaman menginap yang tak terlupakan
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 text-center mb-4">
+            <div class="feature-icon">
+              <i class="fas fa-wifi"></i>
+            </div>
+            <h4>WiFi Gratis</h4>
+            <p>Akses internet cepat di seluruh area hotel</p>
+          </div>
+          <div class="col-md-3 text-center mb-4">
+            <div class="feature-icon">
+              <i class="fas fa-utensils"></i>
+            </div>
+            <h4>Restoran</h4>
+            <p>Menu lezat dengan bahan berkualitas</p>
+          </div>
+          <div class="col-md-3 text-center mb-4">
+            <div class="feature-icon">
+              <i class="fas fa-swimming-pool"></i>
+            </div>
+            <h4>Kolam Renang</h4>
+            <p>Kolam renang indoor dan outdoor</p>
+          </div>
+          <div class="col-md-3 text-center mb-4">
+            <div class="feature-icon">
+              <i class="fas fa-concierge-bell"></i>
+            </div>
+            <h4>Layanan 24 Jam</h4>
+            <p>Staf siap membantu kapan saja</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Facilities Section -->
+    <section id="facilities" class="py-5">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col text-center">
+            <h2 class="fw-bold">Fasilitas Kami</h2>
+            <p class="lead">
+              Nikmati berbagai fasilitas terbaik selama menginap
+            </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+              <img
+                src="https://i.pinimg.com/736x/58/25/1f/58251f87f1dc5beaf71755320b1fcb30.jpg"
+                class="card-img-top"
+                alt="Restoran"
+              />
+              <div class="card-body">
+                <h4 class="card-title">Restoran & Kafe</h4>
+                <p class="card-text">
+                  Nikmati hidangan lezat dari chef profesional kami dengan
+                  berbagai pilihan menu internasional dan lokal.
+                </p>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item border-0 ps-0">
+                    <i class="fas fa-clock me-2 text-primary"></i> Buka 06.00 -
+                    22.00
+                  </li>
+                  <li class="list-group-item border-0 ps-0">
+                    <i class="fas fa-utensils me-2 text-primary"></i> Sarapan
+                    buffet
+                  </li>
+                  <li class="list-group-item border-0 ps-0">
+                    <i class="fas fa-wine-glass-alt me-2 text-primary"></i> Bar
+                    lengkap
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+              <img
+                src="https://i.pinimg.com/736x/fa/ce/a7/facea7f827dd0e96b1bcd8fcd4f45cab.jpg"
+                class="card-img-top"
+                alt="Spa"
+              />
+              <div class="card-body">
+                <h4 class="card-title">Spa & Wellness</h4>
+                <p class="card-text">
+                  Temukan ketenangan dan relaksasi dengan perawatan spa
+                  profesional dan fasilitas wellness lengkap.
+                </p>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item border-0 ps-0">
+                    <i class="fas fa-spa me-2 text-primary"></i> Berbagai
+                    pilihan pijat
+                  </li>
+                  <li class="list-group-item border-0 ps-0">
+                    <i class="fas fa-hot-tub me-2 text-primary"></i> Jacuzzi &
+                    sauna
+                  </li>
+                  <li class="list-group-item border-0 ps-0">
+                    <i class="fas fa-user-md me-2 text-primary"></i> Terapis
+                    profesional
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+              <img
+                src="https://i.pinimg.com/736x/f7/8d/f6/f78df6a38fe911e5f6908408603979b5.jpg"
+                class="card-img-top"
+                alt="Meeting Room"
+              />
+              <div class="card-body">
+                <h4 class="card-title">Ruang Pertemuan</h4>
+                <p class="card-text">
+                  Fasilitas meeting dan konferensi lengkap untuk kebutuhan
+                  bisnis Anda dengan kapasitas hingga 500 orang.
+                </p>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item border-0 ps-0">
+                    <i class="fas fa-projector me-2 text-primary"></i> Peralatan
+                    presentasi
+                  </li>
+                  <li class="list-group-item border-0 ps-0">
+                    <i class="fas fa-coffee me-2 text-primary"></i> Coffee break
+                  </li>
+                  <li class="list-group-item border-0 ps-0">
+                    <i class="fas fa-wifi me-2 text-primary"></i> WiFi kecepatan
+                    tinggi
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-3 pb-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="mb-0">&copy; 2023 HotelHeaven. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <p class="mb-0">
+              Dibuat dengan sepenuh hati
+              <i class="fas fa-heart text-danger"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("HotelHeaven booking system ready");
+
+        // Update search box dates
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        document.getElementById("checkin").valueAsDate = today;
+        document.getElementById("checkout").valueAsDate = tomorrow;
+      });
+    </script>
+  </body>
 </html>

@@ -1,15 +1,8 @@
 package com.hotelbooking.hotelbookingapp.controller;
 
-import com.hotelbooking.hotelbookingapp.model.dto.HotelDTO;
-import com.hotelbooking.hotelbookingapp.model.dto.BookingDTO;
-import com.hotelbooking.hotelbookingapp.model.dto.PaymentCardDTO;
-import com.hotelbooking.hotelbookingapp.model.dto.UserDTO;
-import com.hotelbooking.hotelbookingapp.model.dto.BookingInitiationDTO;
-import com.hotelbooking.hotelbookingapp.service.BookingService;
-import com.hotelbooking.hotelbookingapp.service.HotelService;
-import com.hotelbooking.hotelbookingapp.service.UserService;
-import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -23,8 +16,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import com.hotelbooking.hotelbookingapp.model.dto.BookingDTO;
+import com.hotelbooking.hotelbookingapp.model.dto.BookingInitiationDTO;
+import com.hotelbooking.hotelbookingapp.model.dto.HotelDTO;
+import com.hotelbooking.hotelbookingapp.model.dto.PaymentCardDTO;
+import com.hotelbooking.hotelbookingapp.model.dto.UserDTO;
+import com.hotelbooking.hotelbookingapp.service.BookingService;
+import com.hotelbooking.hotelbookingapp.service.HotelService;
+import com.hotelbooking.hotelbookingapp.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/booking")
