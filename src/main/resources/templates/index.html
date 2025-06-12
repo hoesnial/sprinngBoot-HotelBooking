@@ -14,9 +14,17 @@
     />
     <style>
       :root {
-        --primary-color: #3a5a78;
-        --secondary-color: #f8f9fa;
-        --accent-color: #ff7e5f;
+        --primary-color: #333333;
+        --secondary-color: #f5f5f5;
+        --accent-color: #ff7b25;
+        --light-gray: #e0e0e0;
+        --medium-gray: #9e9e9e;
+        --dark-gray: #424242;
+      }
+
+      body {
+        background-color: var(--secondary-color);
+        color: var(--dark-gray);
       }
 
       .hero-section {
@@ -38,6 +46,7 @@
         border: none;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         margin-bottom: 20px;
+        background-color: white;
       }
 
       .room-card:hover {
@@ -66,8 +75,8 @@
       }
 
       .btn-primary:hover {
-        background-color: #2c4761;
-        border-color: #2c4761;
+        background-color: #212121;
+        border-color: #212121;
       }
 
       .btn-accent {
@@ -77,8 +86,8 @@
       }
 
       .btn-accent:hover {
-        background-color: #e66b4d;
-        border-color: #e66b4d;
+        background-color: #e66b00;
+        border-color: #e66b00;
         color: white;
       }
 
@@ -109,7 +118,7 @@
       }
 
       footer {
-        background-color: #2c3e50;
+        background-color: var(--primary-color);
       }
 
       .footer-links a {
@@ -119,17 +128,22 @@
       }
 
       .footer-links a:hover {
-        color: white;
+        color: var(--accent-color);
       }
 
       .social-icons a {
         color: white;
         font-size: 1.5rem;
         margin-right: 15px;
+        transition: color 0.3s;
+      }
+
+      .social-icons a:hover {
+        color: var(--accent-color);
       }
 
       .nav-pills .nav-link.active {
-        background-color: var(--primary-color);
+        background-color: var(--accent-color);
       }
 
       .tab-content {
@@ -174,8 +188,8 @@
 
       .newsletter {
         background: linear-gradient(
-            rgba(58, 90, 120, 0.9),
-            rgba(58, 90, 120, 0.9)
+            rgba(51, 51, 51, 0.9),
+            rgba(51, 51, 51, 0.9)
           ),
           url("https://source.unsplash.com/random/1200x400/?travel") no-repeat
             center center;
@@ -193,11 +207,56 @@
         color: var(--accent-color);
       }
 
+      /* Enhanced Contact Section */
+      .contact-form {
+        background-color: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .contact-form .form-control {
+        border: 1px solid var(--light-gray);
+        padding: 12px 15px;
+        margin-bottom: 20px;
+      }
+
+      .contact-form .form-control:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 0.25rem rgba(255, 123, 37, 0.25);
+      }
+
+      .contact-form textarea {
+        min-height: 150px;
+      }
+
+      .contact-info-card {
+        background-color: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        height: 100%;
+      }
+
+      .contact-info-card i {
+        color: var(--accent-color);
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+      }
+
+      .contact-info-card h5 {
+        color: var(--primary-color);
+        margin-bottom: 15px;
+      }
+
+      .contact-info-card p {
+        color: var(--medium-gray);
+      }
+
       @media (max-width: 768px) {
         .hero-section {
           height: 60vh;
         }
-
         .search-box {
           margin-top: 0;
         }
@@ -223,13 +282,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link active" href="/">Beranda</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#rooms">Kamar</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="#facilities">Fasilitas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#testimonial">Testimonial</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#gallery">Galeri</a>
@@ -286,10 +342,7 @@
                 fasilitas lengkap untuk liburan atau perjalanan bisnis Anda.
               </p>
               <div class="d-flex gap-3">
-                <a href="#rooms" class="btn btn-accent btn-lg px-4">
-                  <i class="fas fa-bed me-2"></i>Lihat Kamar
-                </a>
-                <a href="#contact" class="btn btn-outline-light btn-lg px-4">
+                <a href="#contact" class="btn btn-accent btn-lg px-4">
                   <i class="fas fa-phone me-2"></i>Hubungi Kami
                 </a>
               </div>
@@ -298,46 +351,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Search Box -->
-    <div class="container">
-      <div class="search-box">
-        <form>
-          <div class="row g-3">
-            <div class="col-md-3">
-              <label for="checkin" class="form-label">Tanggal Check-in</label>
-              <input type="date" class="form-control" id="checkin" />
-            </div>
-            <div class="col-md-3">
-              <label for="checkout" class="form-label">Tanggal Check-out</label>
-              <input type="date" class="form-control" id="checkout" />
-            </div>
-            <div class="col-md-2">
-              <label for="adults" class="form-label">Dewasa</label>
-              <select class="form-select" id="adults">
-                <option value="1">1</option>
-                <option value="2" selected>2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
-            <div class="col-md-2">
-              <label for="children" class="form-label">Anak-anak</label>
-              <select class="form-select" id="children">
-                <option value="0" selected>0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-              </select>
-            </div>
-            <div class="col-md-2 d-flex align-items-end">
-              <button type="submit" class="btn btn-primary w-100">
-                <i class="fas fa-search me-2"></i>Cari
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
 
     <!-- Features Section -->
     <section class="py-5">
@@ -378,401 +391,6 @@
             </div>
             <h4>Layanan 24 Jam</h4>
             <p>Staf siap membantu kapan saja</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Room Listing -->
-    <section id="rooms" class="py-5 bg-light">
-      <div class="container">
-        <div class="row mb-5">
-          <div class="col">
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb"></ol>
-            </nav>
-            <h2 class="fw-bold">Kamar Tersedia</h2>
-            <p>Temukan kamar yang sesuai dengan kebutuhan Anda</p>
-          </div>
-        </div>
-
-        <div class="row mb-4">
-          <div class="col">
-            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-              <li class="nav-item" role="presentation">
-                <button
-                  class="nav-link active"
-                  id="pills-all-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#pills-all"
-                  type="button"
-                >
-                  Semua Kamar
-                </button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button
-                  class="nav-link"
-                  id="pills-standard-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#pills-standard"
-                  type="button"
-                >
-                  Standard
-                </button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button
-                  class="nav-link"
-                  id="pills-deluxe-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#pills-deluxe"
-                  type="button"
-                >
-                  Deluxe
-                </button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button
-                  class="nav-link"
-                  id="pills-suite-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#pills-suite"
-                  type="button"
-                >
-                  Suite
-                </button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button
-                  class="nav-link"
-                  id="pills-family-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#pills-family"
-                  type="button"
-                >
-                  Family
-                </button>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="tab-content" id="pills-tabContent">
-          <div class="tab-pane fade show active" id="pills-all" role="tabpanel">
-            <div class="row">
-              <!-- Room 1 -->
-              <div class="col-md-4 mb-4">
-                <div class="card room-card h-100">
-                  <div class="position-relative">
-                    <img
-                      src="https://i.pinimg.com/736x/83/9e/fe/839efe28d4e47810182789ead59a1ceb.jpg"
-                      class="card-img-top"
-                      alt="Standard Room"
-                    />
-                    <div class="availability-badge">Tersedia</div>
-                    <div class="discount-badge">Diskon 15%</div>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Standard Room</h5>
-                    <div
-                      class="d-flex justify-content-between align-items-center mb-3"
-                    >
-                      <div class="price">
-                        Rp 425.000
-                        <small class="text-muted text-decoration-line-through"
-                          >Rp 500.000</small
-                        >
-                      </div>
-                      <div class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="far fa-star"></i>
-                      </div>
-                    </div>
-                    <div class="amenities mb-3">
-                      <div><i class="fas fa-user"></i> 2 Orang</div>
-                      <div><i class="fas fa-ruler-combined"></i> 25m²</div>
-                      <div><i class="fas fa-bed"></i> 1 Double Bed</div>
-                    </div>
-                    <p class="card-text">
-                      Kamar nyaman dengan tempat tidur double, AC, TV layar
-                      datar, dan kamar mandi pribadi.
-                    </p>
-                    <div class="d-grid gap-2">
-                      <button class="btn btn-primary">
-                        <i class="fas fa-calendar-alt me-2"></i>Pesan Sekarang
-                      </button>
-                      <button class="btn btn-outline-secondary">
-                        <i class="far fa-heart me-2"></i>Simpan
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Room 2 -->
-              <div class="col-md-4 mb-4">
-                <div class="card room-card h-100">
-                  <div class="position-relative">
-                    <img
-                      src="https://i.pinimg.com/736x/37/cc/9a/37cc9adaec9c73555a9f63ce498256ca.jpg"
-                      class="card-img-top"
-                      alt="Deluxe Room"
-                    />
-                    <div class="availability-badge">Tersedia</div>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Deluxe Room</h5>
-                    <div
-                      class="d-flex justify-content-between align-items-center mb-3"
-                    >
-                      <div class="price">Rp 750.000</div>
-                      <div class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                      </div>
-                    </div>
-                    <div class="amenities mb-3">
-                      <div><i class="fas fa-user"></i> 2 Orang</div>
-                      <div><i class="fas fa-ruler-combined"></i> 35m²</div>
-                      <div><i class="fas fa-bed"></i> 1 King Bed</div>
-                    </div>
-                    <p class="card-text">
-                      Kamar lebih luas dengan tempat tidur king size, area
-                      duduk, dan pemandangan kota yang indah.
-                    </p>
-                    <div class="d-grid gap-2">
-                      <button class="btn btn-primary">
-                        <i class="fas fa-calendar-alt me-2"></i>Pesan Sekarang
-                      </button>
-                      <button class="btn btn-outline-secondary">
-                        <i class="far fa-heart me-2"></i>Simpan
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Room 3 -->
-              <div class="col-md-4 mb-4">
-                <div class="card room-card h-100">
-                  <div class="position-relative">
-                    <img
-                      src="https://i.pinimg.com/736x/61/7f/7c/617f7c6da36595b1e0727ecc8872d1de.jpg"
-                      class="card-img-top"
-                      alt="Suite Room"
-                    />
-                    <div class="availability-badge">Tersedia</div>
-                    <div class="discount-badge">Diskon 20%</div>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Executive Suite</h5>
-                    <div
-                      class="d-flex justify-content-between align-items-center mb-3"
-                    >
-                      <div class="price">
-                        Rp 1.200.000
-                        <small class="text-muted text-decoration-line-through"
-                          >Rp 1.500.000</small
-                        >
-                      </div>
-                      <div class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                      </div>
-                    </div>
-                    <div class="amenities mb-3">
-                      <div><i class="fas fa-user"></i> 2 Orang</div>
-                      <div><i class="fas fa-ruler-combined"></i> 60m²</div>
-                      <div><i class="fas fa-bed"></i> 1 King Bed</div>
-                    </div>
-                    <p class="card-text">
-                      Suite mewah dengan ruang tamu terpisah, kamar mandi mewah,
-                      dan fasilitas premium untuk pengalaman menginap istimewa.
-                    </p>
-                    <div class="d-grid gap-2">
-                      <button class="btn btn-primary">
-                        <i class="fas fa-calendar-alt me-2"></i>Pesan Sekarang
-                      </button>
-                      <button class="btn btn-outline-secondary">
-                        <i class="far fa-heart me-2"></i>Simpan
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Room 4 -->
-              <div class="col-md-4 mb-4">
-                <div class="card room-card h-100">
-                  <div class="position-relative">
-                    <img
-                      src="https://i.pinimg.com/736x/36/63/6c/36636c58560abf6c66f850d122c6ac50.jpg"
-                      class="card-img-top"
-                      alt="Family Room"
-                    />
-                    <div class="availability-badge">Tersedia</div>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Family Room</h5>
-                    <div
-                      class="d-flex justify-content-between align-items-center mb-3"
-                    >
-                      <div class="price">Rp 950.000</div>
-                      <div class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                      </div>
-                    </div>
-                    <div class="amenities mb-3">
-                      <div><i class="fas fa-user"></i> 4 Orang</div>
-                      <div><i class="fas fa-ruler-combined"></i> 45m²</div>
-                      <div><i class="fas fa-bed"></i> 2 Double Beds</div>
-                    </div>
-                    <p class="card-text">
-                      Kamar luas dengan dua tempat tidur double, cocok untuk
-                      keluarga dengan anak-anak.
-                    </p>
-                    <div class="d-grid gap-2">
-                      <button class="btn btn-primary">
-                        <i class="fas fa-calendar-alt me-2"></i>Pesan Sekarang
-                      </button>
-                      <button class="btn btn-outline-secondary">
-                        <i class="far fa-heart me-2"></i>Simpan
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Room 5 -->
-              <div class="col-md-4 mb-4">
-                <div class="card room-card h-100">
-                  <div class="position-relative">
-                    <img
-                      src="https://i.pinimg.com/736x/93/3b/32/933b32368fe8a7935a9263d782fc4d0b.jpg"
-                      class="card-img-top"
-                      alt="Presidential Suite"
-                    />
-                    <div class="availability-badge">Tersedia</div>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Presidential Suite</h5>
-                    <div
-                      class="d-flex justify-content-between align-items-center mb-3"
-                    >
-                      <div class="price">Rp 3.500.000</div>
-                      <div class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                      </div>
-                    </div>
-                    <div class="amenities mb-3">
-                      <div><i class="fas fa-user"></i> 2 Orang</div>
-                      <div><i class="fas fa-ruler-combined"></i> 120m²</div>
-                      <div><i class="fas fa-bed"></i> 1 King Bed</div>
-                    </div>
-                    <p class="card-text">
-                      Suite termewah kami dengan ruang tamu besar, ruang makan
-                      pribadi, kamar mandi mewah dengan bak mandi whirlpool, dan
-                      pemandangan kota spektakuler.
-                    </p>
-                    <div class="d-grid gap-2">
-                      <button class="btn btn-primary">
-                        <i class="fas fa-calendar-alt me-2"></i>Pesan Sekarang
-                      </button>
-                      <button class="btn btn-outline-secondary">
-                        <i class="far fa-heart me-2"></i>Simpan
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Room 6 -->
-              <div class="col-md-4 mb-4">
-                <div class="card room-card h-100">
-                  <div class="position-relative">
-                    <img
-                      src="https://i.pinimg.com/736x/9d/ad/f7/9dadf7c237d44f75ef4a097deb803a20.jpg"
-                      class="card-img-top"
-                      alt="Accessible Room"
-                    />
-                    <div class="availability-badge">Tersedia</div>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Accessible Room</h5>
-                    <div
-                      class="d-flex justify-content-between align-items-center mb-3"
-                    >
-                      <div class="price">Rp 550.000</div>
-                      <div class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="far fa-star"></i>
-                      </div>
-                    </div>
-                    <div class="amenities mb-3">
-                      <div><i class="fas fa-user"></i> 2 Orang</div>
-                      <div><i class="fas fa-ruler-combined"></i> 30m²</div>
-                      <div><i class="fas fa-bed"></i> 1 Double Bed</div>
-                    </div>
-                    <p class="card-text">
-                      Kamar yang dirancang khusus untuk tamu dengan kebutuhan
-                      khusus, dengan aksesibilitas penuh dan fasilitas
-                      pendukung.
-                    </p>
-                    <div class="d-grid gap-2">
-                      <button class="btn btn-primary">
-                        <i class="fas fa-calendar-alt me-2"></i>Pesan Sekarang
-                      </button>
-                      <button class="btn btn-outline-secondary">
-                        <i class="far fa-heart me-2"></i>Simpan
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col text-center">
-                <button class="btn btn-outline-primary btn-lg">
-                  <i class="fas fa-arrow-down me-2"></i>Lihat Lebih Banyak Kamar
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Other tabs content would go here -->
-          <div class="tab-pane fade" id="pills-standard" role="tabpanel">
-            <!-- Standard rooms content -->
-          </div>
-          <div class="tab-pane fade" id="pills-deluxe" role="tabpanel">
-            <!-- Deluxe rooms content -->
-          </div>
-          <div class="tab-pane fade" id="pills-suite" role="tabpanel">
-            <!-- Suite rooms content -->
-          </div>
-          <div class="tab-pane fade" id="pills-family" role="tabpanel">
-            <!-- Family rooms content -->
           </div>
         </div>
       </div>
@@ -887,7 +505,7 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section class="py-5 bg-light">
+    <section id="testimonial" class="py-5 bg-light">
       <div class="container">
         <div class="row mb-5">
           <div class="col text-center">
@@ -912,8 +530,7 @@
                 <i class="fas fa-star"></i>
               </div>
               <p class="mb-4">
-                "Pelayanan sangat ramah dan kamar sangat nyaman. Jadi pengen
-                nginep disini lagi."
+                "Pelayanan sangat ramah dan kamar sangat nyaman."
               </p>
               <h5 class="mb-1">Lily Star</h5>
               <p class="text-muted">Business Traveler</p>
@@ -935,8 +552,7 @@
                 <i class="fas fa-star-half-alt"></i>
               </div>
               <p class="mb-4">
-                "Hotelnya bagus banget. Fasilitasnya juga lengkap dan lokasi
-                strategis dekat dengan atraksi wisata."
+                "Fasilitasnya lengkap dan lokasinya sangat strategis"
               </p>
               <h5 class="mb-1">Ryota Nakamura</h5>
               <p class="text-muted">Family Vacation</p>
@@ -957,10 +573,7 @@
                 <i class="fas fa-star"></i>
                 <i class="far fa-star"></i>
               </div>
-              <p class="mb-4">
-                "Spa di hotel ini beneran sebagus itu. Setelah perawatan, badan
-                jadi seger semua."
-              </p>
+              <p class="mb-4">"Spa disini lumayan lah."</p>
               <h5 class="mb-1">Karina Chan</h5>
               <p class="text-muted">Spa Enthusiast</p>
             </div>
@@ -1035,43 +648,6 @@
             </a>
           </div>
         </div>
-
-        <div class="row mt-4">
-          <div class="col text-center">
-            <button class="btn btn-outline-primary">
-              <i class="fas fa-images me-2"></i>Lihat Galeri Lengkap
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Newsletter Section -->
-    <section class="newsletter">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-8 text-center">
-            <h2 class="mb-4">Dapatkan Penawaran Spesial</h2>
-            <p class="mb-5">
-              Berlangganan newsletter kami untuk mendapatkan promo dan diskon
-              eksklusif
-            </p>
-            <form class="row g-2 justify-content-center">
-              <div class="col-md-8">
-                <input
-                  type="email"
-                  class="form-control form-control-lg"
-                  placeholder="Alamat email Anda"
-                />
-              </div>
-              <div class="col-md-2">
-                <button type="submit" class="btn btn-accent btn-lg w-100">
-                  <i class="fas fa-paper-plane me-2"></i>Daftar
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -1085,107 +661,63 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-6 mb-4">
-            <div class="card h-100 border-0 shadow-sm">
-              <div class="card-body p-5">
-                <h3 class="mb-4">Informasi Kontak</h3>
-                <ul class="list-unstyled">
-                  <li class="mb-3">
-                    <i class="fas fa-map-marker-alt me-3 text-primary"></i>
-                    Jl. HotelHeaven No. 123, Bandung 10110
-                  </li>
-                  <li class="mb-3">
-                    <i class="fas fa-phone me-3 text-primary"></i>
-                    +62 21 1234 5678
-                  </li>
-                  <li class="mb-3">
-                    <i class="fas fa-envelope me-3 text-primary"></i>
-                    info@hotelheaven.com
-                  </li>
-                  <li class="mb-3">
-                    <i class="fas fa-clock me-3 text-primary"></i>
-                    Layanan 24 jam
-                  </li>
-                </ul>
+        <div class="row justify-content-center">
+          <div class="col-md-8 mb-4">
+            <div class="contact-info-card">
+              <h3 class="mb-4">Informasi Kontak</h3>
 
-                <h4 class="mt-5 mb-3">Jam Operasional</h4>
-                <ul class="list-unstyled">
-                  <li class="mb-2">Resepsionis: 24 jam</li>
-                  <li class="mb-2">Restoran: 06.00 - 22.00</li>
-                  <li class="mb-2">Spa: 09.00 - 21.00</li>
-                  <li>Kolam Renang: 07.00 - 20.00</li>
-                </ul>
+              <div class="d-flex mb-4">
+                <i class="fas fa-map-marker-alt me-4 mt-1"></i>
+                <div>
+                  <h5>Alamat</h5>
+                  <p>Jl. HotelHeaven No. 123, Bandung 10110</p>
+                </div>
               </div>
-            </div>
-          </div>
 
-          <div class="col-md-6 mb-4">
-            <div class="card h-100 border-0 shadow-sm">
-              <div class="card-body p-5">
-                <h3 class="mb-4">Kirim Pesan</h3>
-                <form>
-                  <div class="mb-3">
-                    <label for="name" class="form-label">Nama Lengkap</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="name"
-                      required
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="email"
-                      required
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="phone" class="form-label">Nomor Telepon</label>
-                    <input type="tel" class="form-control" id="phone" />
-                  </div>
-                  <div class="mb-3">
-                    <label for="subject" class="form-label">Subjek</label>
-                    <select class="form-select" id="subject">
-                      <option>Pertanyaan Umum</option>
-                      <option>Reservasi</option>
-                      <option>Kamar</option>
-                      <option>Fasilitas</option>
-                      <option>Lainnya</option>
-                    </select>
-                  </div>
-                  <div class="mb-3">
-                    <label for="message" class="form-label">Pesan</label>
-                    <textarea
-                      class="form-control"
-                      id="message"
-                      rows="4"
-                      required
-                    ></textarea>
-                  </div>
-                  <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-paper-plane me-2"></i>Kirim Pesan
-                  </button>
-                </form>
+              <div class="d-flex mb-4">
+                <i class="fas fa-phone me-4 mt-1"></i>
+                <div>
+                  <h5>Telepon</h5>
+                  <p>+62 21 1234 5678</p>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="row mt-4">
-          <div class="col">
-            <div class="map-container">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521260322283!2d106.8195613507824!3d-6.194741395493371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5390917b759%3A0x6b45e67356080477!2sMonumen%20Nasional!5e0!3m2!1sen!2sid!4v1623394257726!5m2!1sen!2sid"
-                width="100%"
-                height="100%"
-                style="border: 0"
-                allowfullscreen=""
-                loading="lazy"
-              ></iframe>
+              <div class="d-flex mb-4">
+                <i class="fas fa-envelope me-4 mt-1"></i>
+                <div>
+                  <h5>Email</h5>
+                  <p>info@hotelheaven.com</p>
+                </div>
+              </div>
+
+              <div class="d-flex mb-4">
+                <i class="fas fa-clock me-4 mt-1"></i>
+                <div>
+                  <h5>Jam Operasional</h5>
+                  <p>Layanan 24 jam</p>
+                </div>
+              </div>
+
+              <div class="d-flex mb-4">
+                <i class="fas fa-globe me-4 mt-1"></i>
+                <div>
+                  <h5>Website</h5>
+                  <p>https://www.hotelheaven.com</p>
+                </div>
+              </div>
+
+              <div class="d-flex">
+                <i class="fas fa-share-alt me-4 mt-1"></i>
+                <div>
+                  <h5>Sosial Media</h5>
+                  <p>
+                      @hotelheaven (Instagram)
+                    <br />
+                      Hotel Heaven (Facebook)</a
+                    >
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1198,10 +730,7 @@
         <div class="row">
           <div class="col-md-4 mb-4">
             <h5 class="mb-4"><i class="fas fa-hotel me-2"></i> HotelHeaven</h5>
-            <p>
-              Hotel bintang 5 dengan fasilitas lengkap dan pelayanan terbaik di
-              jantung kota. Pengalaman menginap tak terlupakan menanti Anda.
-            </p>
+            <p>Selamat menikmati hotel Bintang lima anda.</p>
             <div class="social-icons mt-4">
               <a href="#"><i class="fab fa-facebook-f"></i></a>
               <a href="#"><i class="fab fa-twitter"></i></a>
@@ -1213,24 +742,9 @@
           <div class="col-md-2 mb-4">
             <h5 class="mb-4">Tautan Cepat</h5>
             <ul class="list-unstyled footer-links">
-              <li class="mb-2"><a href="/">Beranda</a></li>
-              <li class="mb-2"><a href="#rooms">Kamar</a></li>
               <li class="mb-2"><a href="#facilities">Fasilitas</a></li>
               <li class="mb-2"><a href="#gallery">Galeri</a></li>
               <li class="mb-2"><a href="#contact">Kontak</a></li>
-              <li><a href="/blog">Blog</a></li>
-            </ul>
-          </div>
-
-          <div class="col-md-3 mb-4">
-            <h5 class="mb-4">Layanan</h5>
-            <ul class="list-unstyled footer-links">
-              <li class="mb-2"><a href="#">Reservasi Online</a></li>
-              <li class="mb-2"><a href="#">Meeting & Event</a></li>
-              <li class="mb-2"><a href="#">Spa & Wellness</a></li>
-              <li class="mb-2"><a href="#">Restoran</a></li>
-              <li class="mb-2"><a href="#">Transportasi</a></li>
-              <li><a href="#">FAQ</a></li>
             </ul>
           </div>
 
@@ -1239,7 +753,6 @@
             <ul class="list-unstyled footer-links">
               <li class="mb-2"><a href="#">Syarat & Ketentuan</a></li>
               <li class="mb-2"><a href="#">Kebijakan Privasi</a></li>
-              <li class="mb-2"><a href="#">Kebijakan Pembatalan</a></li>
               <li class="mb-2"><a href="#">Kebijakan Cookie</a></li>
             </ul>
           </div>
@@ -1249,7 +762,7 @@
 
         <div class="row">
           <div class="col-md-6">
-            <p class="mb-0">&copy; 2023 HotelHeaven. All rights reserved.</p>
+            <p class="mb-0">&copy; 2025 HotelHeaven. All rights reserved.</p>
           </div>
           <div class="col-md-6 text-md-end">
             <p class="mb-0">
@@ -1260,74 +773,6 @@
         </div>
       </div>
     </footer>
-
-    <!-- Gallery Modal -->
-    <div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Galeri Hotel</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div id="carouselExample" class="carousel slide">
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img
-                    src="https://source.unsplash.com/random/1200x800/?hotel-lobby"
-                    class="d-block w-100"
-                    alt="Hotel Lobby"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="https://source.unsplash.com/random/1200x800/?hotel-pool"
-                    class="d-block w-100"
-                    alt="Swimming Pool"
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="https://source.unsplash.com/random/1200x800/?hotel-restaurant"
-                    class="d-block w-100"
-                    alt="Restaurant"
-                  />
-                </div>
-              </div>
-              <button
-                class="carousel-control-prev"
-                type="button"
-                data-bs-target="#carouselExample"
-                data-bs-slide="prev"
-              >
-                <span
-                  class="carousel-control-prev-icon"
-                  aria-hidden="true"
-                ></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button
-                class="carousel-control-next"
-                type="button"
-                data-bs-target="#carouselExample"
-                data-bs-slide="next"
-              >
-                <span
-                  class="carousel-control-next-icon"
-                  aria-hidden="true"
-                ></span>
-                <span class="visually-hidden">Next</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>

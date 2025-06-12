@@ -1,93 +1,348 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="id" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/layout-main}">
 <head>
-    <title>Search Hotel</title>
+    <meta charset="UTF-8" />
+    <title>HotelHeaven - Cari Hotel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        :root {
+        --primary-color: #333333;
+        --secondary-color: #f5f5f5;
+        --accent-color: #ff7b25;
+        --light-gray: #e0e0e0;
+        --medium-gray: #9e9e9e;
+        --dark-gray: #424242;
+      }
+
+      body {
+        background-color: var(--secondary-color);
+        color: var(--dark-gray);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .navbar,
+      footer {
+        background-color: var(--primary-color);
+      }
+
+      .navbar .nav-link,
+        .navbar-brand,
+        footer p,
+        footer a {
+          color: white;
+        }
+
+      .navbar .nav-link:hover,
+      .navbar-brand:hover {
+        color: var(--accent-color);
+      }
+
+      .content {
+        padding: 30px 20px;
+        flex: 1;
+      }
+
+      .card-custom {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+        transition: transform 0.3s ease;
+      }
+
+      .card-custom:hover {
+        transform: translateY(-5px);
+      }
+
+      .btn-primary {
+        background-color: var(--accent-color);
+        border-color: var(--primary-color);
+      }
+
+      .btn-primary:hover {
+        background-color: #e66b00;
+        border-color: #e66b00;
+      }
+
+      .btn-outline-primary {
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+      }
+
+      .btn-outline-primary:hover {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      /* New styles for info sections */
+      .info-section {
+        margin-top: 50px;
+      }
+
+      .section-title {
+        position: relative;
+        margin-bottom: 30px;
+        padding-bottom: 10px;
+        font-weight: 700;
+        color: var(--primary-color);
+      }
+
+      .section-title:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 60px;
+        height: 4px;
+        background-color: var(--accent-color);
+        border-radius: 2px;
+      }
+
+      .feature-card {
+        border-radius: 10px;
+        padding: 25px;
+        background: white;
+        height: 100%;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .feature-icon {
+        font-size: 2rem;
+        color: var(--accent-color);
+        margin-bottom: 15px;
+      }
+
+      .tip-card {
+        background: white;
+        border-radius: 10px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .tip-icon {
+        color: var(--accent-color);
+        font-size: 1.5rem;
+        margin-right: 15px;
+      }
+        .search-box {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: -40px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn-primary {
+            background-color: #e66b00;
+            border-color: #e66b00;
+        }
+
+        .btn-primary:hover {
+            background-color: #e66b00;
+            border-color: #e66b00;
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                        url("/img/map-banner.jpg") no-repeat center center;
+            background-size: cover;
+            height: 40vh;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+
+        .hero-text h1 {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 <th:block layout:fragment="content">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container hero-text">
+            <h1 class="display-5">Temukan Hotel Impianmu</h1>
+            <p class="lead">Masukkan kota dan tanggal untuk mulai pencarian</p>
+        </div>
+    </section>
+
+    <!-- Search Box -->
     <div class="container">
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <div class="mb-3">
-                    <img class="img-fluid rounded" src="/img/map-banner.jpg" alt="Map Banner">
-                </div>
-                <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="text-center">Search for Hotels</h2>
+        <div class="search-box">
+            <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+            <form method="post" th:action="@{/search}" th:object="${hotelSearchDTO}">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label" for="city">Kota</label>
+                        <input class="form-control" id="city" type="text" th:field="*{city}" placeholder="Masukkan nama kota" autofocus>
+                        <p class="text-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
                     </div>
-                    <div class="card-body">
-                        <form method="post" th:action="@{/search}" th:object="${hotelSearchDTO}">
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="city">City:</label>
-                                <input class="form-control" id="city" type="text" th:field="*{city}"
-                                       placeholder="Enter city" autofocus>
-                                <p class="text-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="checkinDate">Check-in Date:</label>
-                                <input class="form-control" id="checkinDate" type="text" th:field="*{checkinDate}">
-                                <p class="text-danger" th:if="${#fields.hasErrors('checkinDate')}" th:errors="*{checkinDate}"></p>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="checkoutDate">Check-out Date:</label>
-                                <input class="form-control" id="checkoutDate" type="text" th:field="*{checkoutDate}">
-                                <p class="text-danger" th:if="${#fields.hasErrors('checkoutDate')}" th:errors="*{checkoutDate}"></p>
-                            </div>
-                            <div class="form-group mb-3">
-                                <button type="submit" class="btn btn-primary">Search</button>
-                            </div>
-                        </form>
+                    <div class="col-md-3">
+                        <label class="form-label" for="checkinDate">Check-in</label>
+                        <input class="form-control" id="checkinDate" type="text" placeholder="Pilih tanggal" readonly th:field="*{checkinDate}">
+                        <p class="text-danger" th:if="${#fields.hasErrors('checkinDate')}" th:errors="*{checkinDate}"></p>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label" for="checkoutDate">Check-out</label>
+                        <input class="form-control" id="checkoutDate" type="text" placeholder="Pilih tanggal" readonly th:field="*{checkoutDate}">
+                        <p class="text-danger" th:if="${#fields.hasErrors('checkoutDate')}" th:errors="*{checkoutDate}"></p>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-search me-1"></i> Cari
+                        </button>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
+
+     <!-- Features Section -->
+     <div class="info-section">
+        <h3 class="section-title">Fasilitas Eksklusif</h3>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="feature-card text-center">
+              <div class="feature-icon">
+                <i class="fas fa-utensils"></i>
+              </div>
+              <h4>Restoran Premium</h4>
+              <p class="text-muted">
+                Menu istimewa dari chef ternama dengan bahan berkualitas tinggi
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="feature-card text-center">
+              <div class="feature-icon">
+                <i class="fas fa-spa"></i>
+              </div>
+              <h4>Heaven Spa</h4>
+              <p class="text-muted">
+                Perawatan spa profesional untuk relaksasi maksimal
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="feature-card text-center">
+              <div class="feature-icon">
+                <i class="fas fa-swimming-pool"></i>
+              </div>
+              <h4>Infinity Pool</h4>
+              <p class="text-muted">
+                Kolam renang dengan pemandangan kota yang memukau
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tips Section -->
+      <div class="info-section">
+        <h3 class="section-title">Tips Menginap Nyaman</h3>
+        <div class="tip-card">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="d-flex mb-4">
+                <div class="tip-icon">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div>
+                  <h5>Waktu Check-in/out</h5>
+                  <p class="text-muted mb-0">Pastikan sesuai jadwal</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="d-flex mb-4">
+                <div class="tip-icon">
+                  <i class="fas fa-concierge-bell"></i>
+                </div>
+                <div>
+                  <h5>Layanan 24 Jam</h5>
+                  <p class="text-muted mb-0">
+                    Resepsionis siap membantu kapan saja
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="d-flex mb-4">
+                <div class="tip-icon">
+                  <i class="fas fa-wifi"></i>
+                </div>
+                <div>
+                  <h5>WiFi Premium</h5>
+                  <p class="text-muted mb-0">
+                    Kecepatan tinggi di seluruh area hotel
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 </th:block>
+
 <th:block layout:fragment="additional-scripts">
     <script>
         $(document).ready(function () {
             const displayFormat = "dd.mm.yy";
-            const submitFormat = "yy-mm-dd"; // Format that Spring Boot expects for LocalDate
+            const submitFormat = "yy-mm-dd";
 
-            // Block invalid characters for city input
+            // Filter karakter kota
             $("#city").on("input", function () {
-                var value = $(this).val();
-                var filteredValue = value.replace(/[^A-Za-z\s'-]/g, "");
+                const value = $(this).val();
+                const filteredValue = value.replace(/[^A-Za-z\s'-]/g, "");
                 $(this).val(filteredValue);
             });
 
-            // Initialize checkinDate
+            // Init datepickers
             $("#checkinDate").datepicker({
                 dateFormat: displayFormat,
                 minDate: 0,
                 onClose: function (selectedDate) {
                     if (selectedDate) {
-                        var checkoutMinDate = $.datepicker.parseDate(displayFormat, selectedDate);
-                        checkoutMinDate.setDate(checkoutMinDate.getDate() + 1); // Minimum 1 day after check-in
+                        const checkoutMinDate = $.datepicker.parseDate(displayFormat, selectedDate);
+                        checkoutMinDate.setDate(checkoutMinDate.getDate() + 1);
                         $("#checkoutDate").datepicker("option", "minDate", checkoutMinDate);
                     }
                 }
-            }).attr('readonly', 'readonly');
+            });
 
-            // Initialize checkoutDate
             $("#checkoutDate").datepicker({
                 dateFormat: displayFormat,
                 minDate: +1
-            }).attr('readonly', 'readonly');
-
-            // Reformat dates on form submit
-            $("form").on("submit", function () {
-                var checkinDate = $('#checkinDate').datepicker('getDate');
-                var checkoutDate = $('#checkoutDate').datepicker('getDate');
-                $('#checkinDate').val($.datepicker.formatDate(submitFormat, checkinDate));
-                $('#checkoutDate').val($.datepicker.formatDate(submitFormat, checkoutDate));
             });
 
-            // Placeholder
-            $("#checkinDate, #checkoutDate").each(function () {
-                $(this).attr("placeholder", "Select date");
+            // Format tanggal sebelum submit
+            $("form").on("submit", function () {
+                const checkinDate = $('#checkinDate').datepicker('getDate');
+                const checkoutDate = $('#checkoutDate').datepicker('getDate');
+                if (checkinDate) {
+                    $('#checkinDate').val($.datepicker.formatDate(submitFormat, checkinDate));
+                }
+                if (checkoutDate) {
+                    $('#checkoutDate').val($.datepicker.formatDate(submitFormat, checkoutDate));
+                }
             });
         });
     </script>
