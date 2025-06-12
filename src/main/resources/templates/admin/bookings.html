@@ -1,42 +1,86 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layout/layout-main}">
-<head>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{/layout/layout-main}"
+>
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
     <title>All Bookings</title>
-</head>
-<body>
-<th:block layout:fragment="content">
-    <div class="container">
+    <style>
+      :root {
+        --primary-color: #333333;
+        --secondary-color: #f5f5f5;
+        --accent-color: #ff7b25;
+        --light-gray: #e0e0e0;
+        --medium-gray: #9e9e9e;
+        --dark-gray: #424242;
+      }
+      .navbar,
+      footer {
+        background-color: var(--primary-color);
+      }
+
+      .navbar .nav-link,
+      .navbar-brand,
+      footer p,
+      footer a {
+        color: white;
+      }
+
+      .navbar .nav-link:hover,
+      .navbar-brand:hover {
+        color: var(--accent-color);
+      }
+    </style>
+  </head>
+  <body>
+    <th:block layout:fragment="content">
+      <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <h2>All Bookings</h2>
-                <table class="table table-striped align-middle">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Booking Date</th>
-                        <th>Hotel</th>
-                        <th>Customer</th>
-                        <th>Total Price</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="align-middle" th:each="booking : ${bookings}">
-                        <td th:text="${booking.id}"></td>
-                        <td th:text="${booking.bookingDate}"></td>
-                        <td th:text="${booking.hotelName}"></td>
-                        <td th:text="${booking.customerEmail}"></td>
-                        <td th:text="'$ ' + ${#numbers.formatDecimal(booking.totalPrice, 0, 'COMMA', 2, 'POINT')}"></td>
-                        <td>
-                            <a th:href="@{/admin/bookings/{id}(id=${booking.id})}" class="btn btn-primary btn-sm">Details</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+          <div class="col-md-12">
+            <h2>All Bookings</h2>
+            <table class="table table-striped align-middle">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Booking Date</th>
+                  <th>Hotel</th>
+                  <th>Customer</th>
+                  <th>Total Price</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="align-middle" th:each="booking : ${bookings}">
+                  <td th:text="${booking.id}"></td>
+                  <td th:text="${booking.bookingDate}"></td>
+                  <td th:text="${booking.hotelName}"></td>
+                  <td th:text="${booking.customerEmail}"></td>
+                  <td
+                    th:text="'Rp ' + ${#numbers.formatDecimal(booking.totalPrice, 0, 'COMMA', 2, 'POINT')}"
+                  ></td>
+                  <td>
+                    <a
+                      th:href="@{/admin/bookings/{id}(id=${booking.id})}"
+                      class="btn btn-primary btn-sm"
+                      >Details</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-    </div>
-</th:block>
-</body>
+      </div>
+    </th:block>
+  </body>
 </html>
