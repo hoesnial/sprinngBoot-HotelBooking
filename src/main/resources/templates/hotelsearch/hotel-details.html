@@ -246,11 +246,7 @@
       <script th:inline="javascript">
         /*<![CDATA[*/
         document.addEventListener("DOMContentLoaded", function () {
-          initializeHotelMap(
-            "[[${hotel.addressDTO.addressLine + ",
-            " + hotel.addressDTO.city + ",
-            " + hotel.addressDTO.country}]]"
-          );
+            initializeHotelMap([[${hotel.addressDTO.addressLine + ', ' + hotel.addressDTO.city + ', ' + hotel.addressDTO.country}]] );
         });
         /*]]>*/
       </script>
